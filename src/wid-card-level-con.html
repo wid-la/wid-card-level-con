@@ -1,0 +1,207 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-styles/paper-styles-classes.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<link rel="import" href="../wid-card-standard-behavior/wid-card-standard-behavior.html">
+<link rel="import" href="../wid-card-weight-behavior/wid-card-weight-behavior.html">
+<link rel="import" href="../wid-versatile-websocket/wid-versatile-websocket.html">
+<link rel="import" href="../wid-card-subscriptions-behavior/wid-card-subscriptions-behavior.html">
+
+<!--
+Level Con Object. 5 condition levels.
+
+Example:
+
+    <wid-card-level-con></wid-card-level-con>
+
+@group Seed Elements
+@element wid-card-level-con
+@demo demo/index.html
+@hero hero.svg
+-->
+<dom-module id="wid-card-level-con">
+
+<template>
+
+    <style>
+
+      :host {
+        display: block;
+        box-sizing: border-box;
+        height: 100%;
+      }
+
+      paper-material {
+        overflow-y: auto;
+        height: 100%;
+      }
+
+      #level-container {
+        background-color: #fff;
+      }
+
+      .header-level-0 {
+        background-color: #70bf73;
+      }
+      .status-level-0 {
+        background-color: #4caf50;
+      }
+
+      .header-level-1 {
+        background-color: #4dabf5;
+      }
+      .status-level-1 {
+        background-color: #2196f3;
+      }
+
+      .header-level-2 {
+        background-color: #ffcd39;
+      }
+      .status-level-2 {
+        background-color: #ffc107;
+      }
+
+      .header-level-3 {
+        background-color: #ffad33;
+      }
+      .status-level-3 {
+        background-color: #ff9800;
+      }
+
+      .header-level-4 {
+        background-color: #f6695e;
+      }
+      .status-level-4 {
+        background-color: #f44336;
+      }
+
+      /*
+      .row-value {
+        font-weight: bold;
+        font-size: 1.5vw;
+      }
+
+      #user-container  .row-icon iron-icon,
+      #status-container  .row-icon iron-icon {
+        --iron-icon-width: calc(100%/3);
+      }
+      */
+
+      .scale-icon {
+        --iron-icon-height: 100%;
+      }
+
+      #websockets {
+        display: none;
+      }
+
+    </style>
+
+    <div id="websockets">
+
+      <!-- This is a requirement of `wid-card-subscriptions-behavior` -->
+      <!-- one websocket element for each subscribed channel -->
+      <template is="dom-repeat" items="[[websockets]]" as="ws">
+        <wid-versatile-websocket url="[[ws.url]]" token="[[ws.token]]" subscription="[[ws.subscription]]" on-data="_onData">
+        </wid-versatile-websocket>
+      </template>
+
+    </div>
+
+
+    <paper-material class="layout horizontal flex" elevation="3">
+
+      <div id="desc-container" class="layout vertical flex-5">
+        <div id="descHeaderContainer" class="computed-will-be-replaced">
+          <iron-icon class="flex-5 scale-icon" src="sunny.svg"></iron-icon>
+          <div class="flex-7">[[name]]</div>
+        </div>
+        <div id="descStatusContainer" class="row-icon flex-3 layout vertical center-center status-level-0">
+          <div>[[title]]</div>
+          <div>[[reason]]</div>
+        </div>
+      </div>
+      <div id="level-container" class="flex layout vertical center-center">
+        <iron-icon class="scale-icon" src="color.svg"></iron-icon>
+      </div>
+
+<!--       <div id="date-container" class="layout horizontal flex">
+        <div class="row-icon flex layout vertical center-center"><iron-icon class="scale-icon" src="sunny.svg"></iron-icon></div>
+      </div>
+
+      <div id="user-container" class="layout horizontal flex">
+        <div class="row-icon flex layout vertical center-center"><iron-icon class="scale-icon" src="rainy.svg"></iron-icon></div>
+      </div>
+
+      <div id="status-container" class="layout horizontal flex">
+        <div class="row-icon flex layout vertical center-center"><iron-icon class="scale-icon" src="thunderous.svg"></iron-icon></div>
+      </div>
+
+ -->    </paper-material>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+  (function () {
+
+    Polymer({
+
+      is: 'wid-card-level-con',
+
+      behaviors: [Polymer.WidCardStandardBehavior, Polymer.WidCardWeightBehavior, Polymer.WidCardSubscriptionsBehavior],
+
+      properties: {
+        /**
+         * level
+         * @type {Boolean}
+         */
+        level: {
+          type: Number,
+          value: 0,
+          observer: '_conLevelChanged'
+        },
+
+        /**
+         * name
+         * @type {String}
+         */
+        name: {
+          type: String,
+          value: 'Level Con'
+        },
+
+        /**
+         * title
+         * @type {String}
+         */
+        title: {
+          type: String,
+          value: 'Low'
+        },
+
+        /**
+         * reason
+         * @type {String}
+         */
+        reason: {
+          type: String,
+          value: 'No Reason'
+        }
+
+      },
+
+      _conLevelChanged: function(newVal) {
+        this.$.descHeaderContainer.setAttribute('class', 'flex layout horizontal center-center style-scope wid-card-level-con header-level-' + newVal);
+        this.$.descStatusContainer.setAttribute('class', 'row-icon flex-3 layout vertical center-center style-scope wid-card-level-con status-level-' + newVal);
+      }
+
+    });
+
+  })();
+
+</script>
