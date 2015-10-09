@@ -113,14 +113,12 @@ Example:
     </style>
 
     <div id="websockets">
-
       <!-- This is a requirement of `wid-card-subscriptions-behavior` -->
       <!-- one websocket element for each subscribed channel -->
       <template is="dom-repeat" items="[[websockets]]" as="ws">
         <wid-versatile-websocket url="[[ws.url]]" token="[[ws.token]]" subscription="[[ws.subscription]]" on-data="_onData">
         </wid-versatile-websocket>
       </template>
-
     </div>
 
 
