@@ -6,6 +6,7 @@
 
 <link rel="import" href="../wid-card-standard-behavior/wid-card-standard-behavior.html">
 <link rel="import" href="../wid-card-weight-behavior/wid-card-weight-behavior.html">
+<link rel="import" href="../wid-card-theme-behavior/wid-card-theme-behavior.html">
 <link rel="import" href="../wid-versatile-websocket/wid-versatile-websocket.html">
 <link rel="import" href="../wid-card-subscriptions-behavior/wid-card-subscriptions-behavior.html">
 
@@ -36,6 +37,7 @@ Example:
       paper-material {
         overflow-y: auto;
         height: 100%;
+        overflow: visible;
       }
 
       #level-container {
@@ -122,7 +124,7 @@ Example:
     </div>
 
 
-    <paper-material class="layout horizontal flex" elevation="3">
+    <paper-material id="mainContent" class="layout horizontal flex" elevation="3">
 
       <div id="desc-container" class="layout vertical flex-5">
         <div id="descHeaderContainer" class="computed-will-be-replaced">
@@ -154,7 +156,12 @@ Example:
 
       is: 'wid-card-level-con',
 
-      behaviors: [Polymer.WidCardStandardBehavior, Polymer.WidCardWeightBehavior, Polymer.WidCardSubscriptionsBehavior],
+      behaviors: [
+        Polymer.WidCardStandardBehavior, 
+        Polymer.WidCardWeightBehavior, 
+        Polymer.WidCardSubscriptionsBehavior,
+        Polymer.WidCardThemeBehavior
+      ],
 
       properties: {
       /**
